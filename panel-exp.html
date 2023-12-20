@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!--Animated Lower Thirds v1.6-->
+		<!--Author: NoeAL-->
+		<meta charset="utf-8">
+		<meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		
+		<title> Panel</title>
+		<style>
+			  /* Estilos personalizados para el tooltip */
+			  .ui-tooltip {
+            padding: 5px 8px;
+            max-width: 250px;
+            position: absolute;
+            z-index: 9999;
+            white-space: pre-line;
+        }
+			*{
+				padding: 0px;
+				margin: 0px;
+				box-sizing: border-box;
+				font-size: 12px;
+    			font-family: 'Open Sans', '.AppleSystemUIFont', Helvetica, Arial, 'MS Shell Dlg', sans-serif;
+			}	
+			
+			body{
+				background-color: #2b2e38;
+				width: 100%;
+				min-width: 300px;
+				overflow-x: hidden; 
+				overflow-y: hidden; 
+				border: none;
+				color: rgb(255,254,255);
+			}
+
+
+	/*											//Estilo de la barra de desplazamiento 
+			*::-webkit-scrollbar {
+			width: 12px;
+			}
+
+			*::-webkit-scrollbar-track {
+			background: #000000;
+			}
+
+			*::-webkit-scrollbar-thumb {
+			background: #3c404b;
+			border-radius: 5px;
+			}
+
+			 *::-webkit-scrollbar-thumb:hover {
+			background: #595f6e;
+			} 
+			
+												// Cambiamos el fondo cuando esté en active 
+			*::-webkit-scrollbar-thumb:active {
+			background-color: #284cb8;
+			}*/
+
+			.panel {
+				width: 100%;
+				margin: 2px;
+				margin-bottom: 0;
+			}
+
+			.configPanel{
+				position: relative;
+				width: 98%;
+				height: 200px;
+				margin: 2px;
+				border: 1px #284cb8 solid;
+			}
+
+			#onOff{
+				position: relative;
+				width: 98.3%;
+				height: 2rem;
+				margin: 3px 0;
+				/* background-color: #2196F3; */
+			}
+
+			.switch {													/* Slider desde aca */
+			position: relative;
+			display: inline-block;
+			width: 30px;
+			height: 17px;
+			top: 50%;
+			transform: translateY(-50%);
+			left: 2px;
+			}
+
+			.slider {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			background-color: #555555;
+			transition: .4s;
+			border-radius: 17px;
+			}
+
+			.slider:before {
+			position: absolute;
+			content: "";
+			height: 13px;
+			width: 13px;
+			left: 2px;
+			bottom: 2px;
+			background-color: white;
+			transition: .4s;
+			border-radius: 50%;
+			}
+
+			input[type="checkbox"] {
+			display: none;
+			}
+
+			input[type="checkbox"]:checked + .slider {
+			background-color: #2196F3;
+			}
+
+			input[type="checkbox"]:checked + .slider:before {
+			transform: translateX(13px);
+			}																				/* Slider hasta aca */
+
+			.elegirVideos{
+				position: relative;
+  				border: none;
+				border-radius: 4px;
+				background-color: #3c404b;
+				width: 60px;
+				height: 22px;	
+				text-align: center;
+				margin: 0px;
+				color: rgb(255,254,255);
+				padding: 2px 1em 3px 1em;
+				left: 30%;
+			}
+
+			.publi{
+				position: relative;
+  				border: none;
+				border-radius: 4px;
+				width: 60px;
+				height: 22px;	
+				text-align: center;
+				margin: 0px;
+				color: rgb(255,254,255);
+				/* background-color: #cc1717; */
+				padding-right: 1em;
+				padding-left: 1em;
+				left: 31%;
+			}
+
+			.publi:active {
+				background-color: #284cb8;
+			}
+
+			.publiRecordar {
+				background-color: #cc1717 !important;
+			}
+
+			.botonConfig {
+				position: absolute;
+  				display: inline-block;
+				border: none;
+				top: 50%;
+				left: 100%;
+				transform: translate(-100%, -50%);
+				font-size: 20px;
+				border-radius: 4px;
+				width: 2rem;
+				height: 22px;
+				line-height: 22px; /* ajusta el valor a la altura del botón */
+				text-align: center;
+				color: rgb(255,254,255);
+				
+
+			}
+
+			.panel-bottom{
+				display: grid;
+				grid-template-rows: auto auto; /* Dos filas: una fracción de altura y altura automática */
+				grid-template-columns: auto 25px; /* Dos columnas: una fracción de ancho y 30px */
+				gap: 4px 4px; /* Espacio entre los elementos */
+				width: 98.5%;
+				align-items: center;
+				padding: 0px 0px;
+				margin-bottom: 10px;
+			}
+			
+			.panel-bottom input, .panel-bottom button{
+				border: none;
+				color: white;
+				background-color: #3c404b;
+				margin: 0px;
+				border-radius: 4px;
+			}
+
+			.nombreStilo{
+				height: 22px;
+				grid-row: 1; /* Está en la primera fila */
+				grid-column: 1; /* Está en la primera columna */	
+				text-align: left;
+			}
+			
+			.borrar{
+				height: 100%;
+				grid-row: 1; /* Está en la primera fila */
+				grid-column: 2; /* Está en la segunda columna */
+				padding: auto;
+				width: 2rem;
+				font-size: 16px;
+				text-align: center;
+				
+			}
+			
+			.infoStilo{
+				height: 22px;
+				grid-row: 2; /* Está en la segunda fila */
+				grid-column: 1 / span 2; /* Ocupa las dos columnas */
+			}
+					
+			.div_slots{
+				width: 98%;
+				padding: 5px  0px;
+				display: grid;
+				grid-template-columns: 50% 50%;
+				gap: 4px;
+			}
+			
+			
+
+			.botonSlot {
+				position: relative;
+  				display: inline-block;
+				border: none;
+				border-radius: 4px;
+				width: 100%;
+				height: 24px;	
+				text-align: center;
+				margin: 0px;
+				color: rgb(255,254,255);
+				white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+				/* overflow: hidden; */
+				padding-right: 1em;
+				padding-left: 1em;
+			}
+
+
+			
+			.botonSlot[data-info]::before {					/*Tooltips*/
+				content: attr(data-info);
+				position: absolute;
+				background: rgba(255, 255, 255, 0.8);
+				color: #000000;
+				padding: 3px;
+				border-radius: 4px;
+				font-size: 1rem;
+				white-space: nowrap;
+				visibility: hidden;
+				opacity: 0;
+				transition: opacity 0.3s, visibility 0.3s;
+				transform: translate(0%, 90%);
+				left: 0;
+				z-index: 3;
+				pointer-events: none; /* Hace que el elemento no sea clickeable */
+			}
+
+			.botonSlot:nth-child(2n)[data-info]:before {    /*Tooltips de la columna derecha*/
+				transform: translate(-100%, 90%);
+				left: 100%;
+			}
+
+			.botonSlot[data-info]:hover::before {          /* Tooltip visible */
+				visibility: visible;
+				opacity: 1;
+			}
+
+			button:empty {
+   			    background-color: black;
+			}
+			
+			button:not(:empty) {
+    		    background-color: #3c404b;
+    		} 
+	 
+			.botonSel {
+				background-color: #284cb8 !important;
+			}
+
+			button:hover {
+				background-color: #595f6e;
+			}
+			
+		</style>
+	</head>
+	<body class="panel-zocalo panel">
+		<div id="panel-p" class="panel">
+			<div id="onOff">						<!-- primera linea  -->
+					<label for="switchOnOff" class="switch">
+						<input class="checkbox-storable" type="checkbox" id="switchOnOff">
+						<span class="slider"></span>
+					</label>
+
+					<label for="inputPublis" class="elegirVideos">Elegir Videos
+					<input type="file" id="inputPublis" accept="video/*" multiple style="display: none;">
+					</label>
+					<button id="publisButton" class="publi" onclick="enviarVideos()">PUBLI</button>
+				  
+					<button id="botonConfigToogle" class="botonConfig" onclick="mostrarConfig()">+</button>
+			</div>
+											<!-- Div Configuracion  -->
+			<div id="configPanel" class="configPanel" style="display: none;">
+				Contenido del panel de Configuracion
+			</div>
+			<div class="panel-bottom">				<!-- segunda linea  -->
+				<input class="nombreStilo" type="text "id="nombreInput"  placeholder="Nombre">
+				<button class="borrar" value="borrar" id="borrarNombre" onclick="borrarInputs()">&#9851;</button>
+				<input class="infoStilo" type="text" id="infoInput"  placeholder="Info">
+			</div> 
+			<div id="div_slots" class="div_slots">
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 1)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 2)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 3)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 4)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 5)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 6)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 7)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 8)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 9)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 10)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 11)"></button>
+								<button class="botonSlot" data-nombre="" data-info="" onclick="actualizarBoton(this, 12)"></button>
+			</div>
+		</div>
+		
+		<script>
+			let activo;           
+			let slotActivo = 0;                //0 = inactivo   // 1,2,3,4,etc
+			let esActivoCheck = document.getElementById("switchOnOff");
+			let nombreActual = "";
+			let infoActual= "";
+			let nombreInput = document.getElementById("nombreInput");
+            let infoInput = document.getElementById("infoInput");
+			let publisButton = document.getElementById("publisButton");
+
+			// Recuperar valores guardados en el localStorage
+			window.onload = function() { 
+				nombreActual = localStorage.getItem("nombreActual");
+				infoActual = localStorage.getItem("infoActual");
+			  // Revisa el estado del switch
+			var isChecked = JSON.parse(localStorage.getItem("chequeado"));
+        		if (isChecked) {
+           			esActivoCheck.checked = true;
+       			} else {
+            		esActivoCheck.checked = false;
+       			}
+			  const botones = document.querySelectorAll('.botonSlot');
+			slotActivo = localStorage.getItem("slotActivo");
+			botones[slotActivo - 1].classList.add("botonSel");
+			  // Recorre los botones
+			  botones.forEach((boton, indice) => {
+
+				// Construye la clave para buscar en el localStorage (por ejemplo, 'nombre_1', 'nombre_2', etc.)
+				const nombreKey = `nombre_${indice + 1}`;
+				const infoKey = `info_${indice + 1}`;
+				// Obtiene el valor del localStorage para la clave actual
+				const nombreVal = localStorage.getItem(nombreKey);
+				const infoVal = localStorage.getItem(infoKey);
+
+				// Verifica si se encontró un valor en el localStorage
+				if (nombreVal !== "" && nombreVal !== null) {
+				  // Actualiza el atributo data-nombre del botón con el valor del localStorage
+				  boton.setAttribute('data-nombre', nombreVal);
+				  boton.setAttribute('data-info', infoVal);
+				  
+				  
+				  // Actualiza el texto del botón con el valor del localStorage
+				  boton.textContent = `${nombreVal}`;
+				}
+			  });
+			}
+
+		
+			var bc = new BroadcastChannel('alBrowser'); //Send to browser source
+			var bc_video = new BroadcastChannel('videoChannel'); // Manda las publis al browser Source
+			var bcr = new BroadcastChannel('alPanel'); //Receives from the source
+		
+		// Data del Panel al browser
+			//  Activo?, nombre1, nombre2, info1, info2
+						function sendData(){
+			bc.postMessage({activo, nombreActual, infoActual, slotActivo});
+			}
+
+			// Reproductor de Publis
+			let videos = [];
+
+    document.getElementById('inputPublis').addEventListener('change', function(event) {
+     	videos = Array.from(event.target.files);
+    });
+
+    function enviarVideos() {
+      if(videos.length > 0){
+		bc_video.postMessage({ action: 'play_videos', videos });
+		publisRec();
+	  }
+	}
+
+	function publisRec(){
+		let timer;
+		publisButton.classList.remove("publiRecordar");
+		clearTimeout(timer); // Reiniciar el temporizador cada vez que se llama a la función
+  		timer = setTimeout(function() {
+			publisButton.classList.add("publiRecordar");
+		}, 80000);
+	}
+	
+			
+  			function actualizarBoton(boton, numeroBoton) {           //Al clickear los botones Slots
+			if (event.ctrlKey) {                                         //si ctrl + click en el boton 
+				 			boton.textContent = "";					// Borra el contenido del botón
+							 boton.classList.remove("botonSel");
+							boton.setAttribute("data-nombre", "");
+							boton.setAttribute("data-info", "");
+							localStorage.setItem(`nombre_${numeroBoton}`, boton.getAttribute("data-nombre"));
+							localStorage.setItem(`info_${numeroBoton}`, boton.getAttribute("data-info"));
+							return;
+				}
+
+            if (boton.dataset.nombre === "" && nombreInput.value.trim() !== "" && infoInput.value.trim() !== "") {      //si los datos del boton  están vacios y los input NO
+                // Actualizar los atributos data del botón
+                boton.setAttribute("data-nombre", nombreInput.value.toUpperCase().trim());
+                boton.setAttribute("data-info", infoInput.value.trim());
+                // Actualizar el texto del botón
+                boton.textContent = nombreInput.value.toUpperCase().trim();    // nombreActual;
+				localStorage.setItem(`nombre_${numeroBoton}`, boton.getAttribute("data-nombre"));
+				localStorage.setItem(`info_${numeroBoton}`, boton.getAttribute("data-info"));
+				return;
+            }
+			if((boton.dataset.nombre !== "" && boton.dataset.nombre != nombreActual) || (boton.dataset.nombre !== "" && activo == false)){ //si los datos del boton NO estan vacios
+																																// y si No se repite el boton activo  ó  si se repite el boton activo PERO el switch esta inactivo
+                nombreActual = boton.getAttribute("data-nombre");   
+                infoActual = boton.getAttribute("data-info");
+				nombreInput.value = boton.getAttribute("data-nombre");                          // Al apretar el boton pone el texto en el input Nombre (útil para hacer correciones)
+				infoInput.value = boton.getAttribute("data-info");								//  Idem info
+				activo = true;
+				slotActivo = numeroBoton;
+				localStorage.setItem("slotActivo", numeroBoton);
+				localStorage.setItem("nombreActual", nombreActual);
+				localStorage.setItem("infoActual", infoActual);
+				esActivoCheck.checked = true;
+				sendData();
+				localStorage.setItem(`nombre_${numeroBoton}`, boton.getAttribute("data-nombre"));
+				localStorage.setItem(`info_${numeroBoton}`, boton.getAttribute("data-info"));
+									// Obtén todos los botones dentro del div
+					const botones = document.querySelectorAll('.botonSlot');
+
+					// Itera a través de los botones y quita la clase deseada
+					botones.forEach(function(boton) {
+					  boton.classList.remove("botonSel"); 
+					});
+				boton.classList.add("botonSel");
+				}
+        };
+			
+						
+			
+			esActivoCheck.addEventListener("change", function() {
+				// Verifica si el checkbox está marcado o desmarcado
+				if (esActivoCheck.checked && nombreActual != "") {
+				// Acciones a realizar cuando el checkbox se marca
+				console.log(esActivoCheck.checked);
+				console.log(nombreActual);
+				activo = true;
+				sendData();
+				} else {
+				// Acciones a realizar cuando el checkbox se desmarca
+				activo = false;
+				sendData();
+				console.log(esActivoCheck.checked);
+				console.log(nombreActual);
+			  }
+				if (this.checked) {
+            		localStorage.setItem("chequeado", true);
+        		} else {
+            		localStorage.setItem("chequeado", false);
+       			}
+			});
+			
+			function borrarInputs(){               //boton que borra los inputs
+			nombreInput.value = "";
+			infoInput.value = "";
+			
+			};
+			const tooltip = {
+					"data" : "Hola soy un tooltip",
+			}
+			
+		
+			function mostrarConfig() {                               //Panel Configuracion
+				var configPanel = document.getElementById('configPanel');
+				var botonConfig = document.getElementById('botonConfigToogle');
+				if (configPanel.style.display === 'none') {
+					configPanel.style.display = 'block';
+					botonConfig.innerHTML = '-';
+				} else {
+					configPanel.style.display = 'none';
+					botonConfig.innerHTML = '+';
+				}
+			}
+
+		</script>
+		
+	</body>
+	</html>

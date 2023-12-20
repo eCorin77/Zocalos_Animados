@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<!--Animated Lower Thirds v1.6-->
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Lower thirds Source</title>
+	<!-- <link rel="stylesheet" href="css/style-source.css"> -->
+	<!-- <script src="../common/js/jquery.js"></script> -->
+	<style>
+		
+	body{
+		width: 1280px;
+		height: 720px;
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.contenedor{
+		top: 0px;          						 /* posicion global desde arriba*/
+		width: 1280px;
+		height: 720px;
+		position: relative; 
+		overflow: hidden;
+
+	} 
+
+	.publis{
+		width: 100%;
+		z-index: 10;
+		position: absolute;
+		bottom: 5px;
+	}
+
+	.contenedorVideo{
+		width: 100%;
+		height: 106px;
+		position: absolute;
+		overflow: hidden;
+		bottom: 0px;
+		z-index: 2;
+		background-color: black;
+		animation-timing-function: ease-in-out;
+		animation-fill-mode: forwards;
+		transform: translateX(-1280px); 
+	}
+		
+	.contenedorVideo.animIn {
+		animation-name: contenedorVideoAnimIn;
+		animation-delay: 0.4s;
+		transform: translateX(-1280px); 
+		animation-timing-function: ease-in-out;
+		animation-duration: 0.9s;
+	}
+
+	.contenedorVideo.animOut {
+		animation-name: contenedorVideoAnimOut;
+		animation-delay: 0.3s;  
+		transform: translateX(0px); 
+		animation-timing-function: ease-in-out;
+		animation-duration: 0.6s;
+	}
+
+	@keyframes contenedorVideoAnimIn {
+		0% 		{transform: translateX(-1280px); }
+		60%		{transform: translateX(0px); }
+		100% 	{transform: translateX(0px); }
+	}
+
+	@keyframes contenedorVideoAnimOut {
+		0% 		{transform: translateX(0px); }
+		100% 	{transform: translateX(-1280px);}
+	}
+
+	
+	
+	.text-content{	
+		width: 100%;
+		height: 116px;
+		z-index: 3;											      /* posicion del texto */
+		position: absolute;
+		left: 120px;
+		bottom: -20px;
+		overflow: hidden;
+		/* background-color:  rgba(28, 211, 28, 0.623);    */
+	}
+
+	.text-mask-nombre{
+		padding: 0;
+		height: 42px; 
+		width: 1200px;
+		position: relative; 		
+		overflow: hidden;
+		/* background-color: rgba(245, 32, 32, 0.74);    */
+	}
+	.text-mask-info{
+		padding: 0;
+		height: 40px; 
+		width: 1200px;
+		position: relative; 
+		/* top: 70px;		 */
+		overflow: hidden;		
+		/* background-color: rgba(131, 32, 245, 0.74);    */
+	}
+	
+	#nombre{
+		margin: 0;
+		top: 0em;
+		width: auto;
+		white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+		color: white;
+		/* padding: 0px 15px 0px 15px; */
+		font-size: 32px;
+		font-family: 'Roboto';													/* Tipografia nombre */
+		font-weight: 600;
+		text-shadow: 0 0 12px #2698d5;
+		position: absolute;
+		transform: translateY(2em);
+		transition: transform 1s ease-in-out;
+		transition-delay: 0.5s;
+		opacity: 1;
+	}
+	
+	#info{
+		top: 0em;
+		width: auto;
+		white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+		color: white;
+		/* background-color: #2698d5;
+		border-radius: 10px;
+		mix-blend-mode: screen;
+		 padding: 0 13px 13px 13px;  */
+		font-size: 30px;
+		font-family: 'Roboto';													/* Tipografia info */
+		font-weight: 300;
+		text-shadow: 0 0 12px #2698d5;
+		position: absolute;
+		transform: translateY(-2em);
+		opacity: 1;
+	}
+	
+	#nombre.animIn{
+		transform: translateY(6px);
+		opacity: 1;
+		transition: transform 0.6s ease-in-out 0.6s, opacity 0.8s ease-in-out 0.6s;
+	}
+	
+	#nombre.animOut{
+		transform: translateY(2em);
+		opacity: 0;
+		transition: transform 0.5s ease-in-out 0s, opacity 0.6s ease-in-out 0s;
+	}
+	
+	#info.animIn{
+		transform: translateY(0);
+		opacity: 1;
+		transition: transform 0.6s ease-in-out 0.6s, opacity 0.8s ease-in-out 0.6s;
+	}
+	
+	#info.animOut{
+		transform: translateY(-2em);
+		opacity: 0;
+		transition: transform 0.5s ease-in-out 0s, opacity 0.6s ease-in-out 0s;
+	} 
+
+	.logo{
+		bottom: 0;
+		z-index: 4;
+		position: absolute;
+		width: 106px;
+		transform: rotate( -120deg) scale(0);
+	}
+
+	.logo.animIn{
+		transform: rotate(0) scale(1);
+		transition: transform 0.4s ease-in 0s;
+	}
+
+	.logo.animOut{
+		transform: rotate(-120deg) scale(0);
+		transition: transform 0.4s ease-in 0.84s;
+	}
+	
+	</style>
+ </head>
+  <body class="browser-source lower-thirds">
+		<!--Lower third 1-->
+		
+		<div id="lower-third-1" class="contenedor">    <!--  1920x1080 -->
+			<img id="logo" class="logo" src="J-cuadrado-GIF.gif" alt="">
+			<div  id="contenedorVideo"  class="contenedorVideo">  
+				
+				
+				<video id="vidFondo" class="vidFondo" src="Fondo_zocalo.mp4" controls="hidden" autoplay  loop></video>
+			</div>
+			
+			<div class="text-content">
+				<div class="text-mask-nombre">
+					<div id="nombre"></div>
+				</div>
+				<div class="text-mask-info">
+					<div id="info"></div>
+				</div>
+			</div>
+			<div class="graph-2"></div>
+						<!-- Publis -->
+		<video id="videoPlayer" class="publis" autoplay ></video> 
+		</div>
+
+	 <script type="text/javascript">
+			var vidFondo = document.getElementById("vidFondo");
+			var nombreElem = document.getElementById("nombre");
+			var infoElem = document.getElementById("info");
+			let contenedorVideo = document.getElementById("contenedorVideo");
+			let logo = document.getElementById("logo");
+		
+			
+			function playFoward() { 
+				logo.src = "J-cuadrado-GIF.gif";										/* hace que el gif empiece de nuevo*/
+				nombreElem.classList.remove('animOut');
+				nombreElem.classList.add('animIn');
+				infoElem.classList.remove('animOut');
+				infoElem.classList.add('animIn');
+				contenedorVideo.classList.remove('animOut');
+				contenedorVideo.classList.add('animIn');
+				logo.classList.remove("animOut");
+				logo.classList.add('animIn');
+			} 
+			
+			
+			
+			function playReverse() { 
+				//vidFondo.style.visibility="hidden";
+				nombreElem.classList.remove('animIn');
+				nombreElem.classList.add('animOut');
+				infoElem.classList.remove('animIn');
+				infoElem.classList.add('animOut');
+				contenedorVideo.classList.remove('animIn');
+				contenedorVideo.classList.add('animOut');
+				logo.classList.remove("animIn");
+				logo.classList.add('animOut');
+				
+				// hasta aca
+				
+				
+			} 
+		
+
+		const bcp = new BroadcastChannel('alBrowser'); //Receives from the Control panel
+		const bcr = new BroadcastChannel('alPanel'); //Send to Control Panel
+		const bc_video = new BroadcastChannel('videoChannel'); // Recibe publis del panel
+		
+		
+		let nombre = "";
+		let info = "";
+		let estoyActivo = false;
+
+		
+		bcp.onmessage = function(mensaje){
+		var received_data = mensaje.data;
+		var {activo, nombreActual, infoActual, slotActivo} = received_data;
+		
+		nombre = received_data.nombreActual;
+		info = received_data.infoActual;
+
+		if(activo && estoyActivo && nombreActual != received_data[1]){									/* si cambia el nombre se va nombre e info y vuelven a  aparecer*/
+					nombreElem.classList.remove('animIn');
+					infoElem.classList.remove('animIn');
+					nombreElem.classList.add('animOut');
+					infoElem.classList.add('animOut');
+				setTimeout(function() {
+					document.getElementById("nombre").innerHTML = nombre;
+					document.getElementById("info").innerHTML = info;
+					nombreElem.classList.remove('animOut');
+					nombreElem.classList.add('animIn');
+					infoElem.classList.remove('animOut');
+					infoElem.classList.add('animIn');
+				}, 320); // 1000 milisegundos = 1 segundo
+
+		}
+
+
+		if(activo && !estoyActivo){																	/* arranca la animacion */			
+			document.getElementById("nombre").innerHTML = nombre;
+			document.getElementById("info").innerHTML = info;
+			playFoward();
+			estoyActivo = true;
+
+			return;
+		}
+
+		if(!activo && estoyActivo){																	/* se va la animacion*/
+			document.getElementById("nombre").innerHTML = nombre;
+			document.getElementById("info").innerHTML = info;
+			playReverse();
+			estoyActivo = false;
+		}
+		
+		
+		}
+		
+	
+    let videos = [];
+    let indiceActual = 0;
+
+    bc_video.onmessage = function(event) {
+      const { action, videos: receivedVideos } = event.data;
+      
+      if (action  && receivedVideos) {
+        videos = receivedVideos;
+		if(estoyActivo){
+			playReverse();
+			estoyActivo = false;
+		}
+		setTimeout(function(){
+			reproducirSiguiente();
+		}, 1100);
+		 
+		if(!estoyActivo){setTimeout(function(){
+		 	playFoward();
+			 estoyActivo = true;
+		 }, 9000);
+		}
+      }
+    };
+
+    function reproducirSiguiente() {
+      const videoPlayer = document.getElementById('videoPlayer');
+      if (indiceActual < videos.length) {
+        videoPlayer.src = URL.createObjectURL(videos[indiceActual]);
+        videoPlayer.play();
+        indiceActual++;
+      } else {
+        indiceActual = 0; // Reiniciar al llegar al final
+        videoPlayer.src = URL.createObjectURL(videos[indiceActual]);
+        videoPlayer.play();
+      }
+    }
+		
+		
+	</script>
+
+  </body>
+</html>
